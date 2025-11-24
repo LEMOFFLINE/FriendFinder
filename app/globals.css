@@ -74,33 +74,27 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* 将主题色从青色改为黑灰色系 */
 @theme inline {
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-
-  /* Color palette - warm, friendly, and approachable */
-  --color-primary: #10b981; /* Emerald green - friendly and positive */
-  --color-primary-hover: #059669;
-  --color-secondary: #f59e0b; /* Amber - warm accent */
-  --color-accent: #ec4899; /* Pink - playful highlight */
-
-  /* Neutral colors */
+  --color-primary: #1f2937;
+  --color-primary-hover: #111827;
+  --color-secondary: #6b7280;
+  --color-accent: #374151;
   --color-background: #ffffff;
   --color-surface: #f9fafb;
   --color-border: #e5e7eb;
-
-  /* Text colors */
   --color-foreground: #111827;
   --color-muted: #6b7280;
   --color-muted-foreground: #9ca3af;
-
-  /* Semantic colors */
   --color-success: #10b981;
   --color-error: #ef4444;
   --color-warning: #f59e0b;
-
-  /* Radius */
   --radius: 0.75rem;
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -125,10 +119,6 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -139,23 +129,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* 移除有问题的@layer base @apply语句 */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #111827;
-    --color-surface: #1f2937;
-    --color-border: #374151;
-    --color-foreground: #f9fafb;
-    --color-muted: #9ca3af;
-    --color-muted-foreground: #6b7280;
+    border-color: var(--color-border);
   }
 }
 
@@ -164,26 +141,26 @@
 }
 
 body {
+  margin: 0;
   font-family: var(--font-sans);
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+  background-color: #f9fafb;
+  color: #111827;
   line-height: 1.6;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: #f9fafb;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: #e5e7eb;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-muted);
+  background: #d1d5db;
 }
