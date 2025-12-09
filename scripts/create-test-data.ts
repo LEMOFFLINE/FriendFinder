@@ -1,13 +1,18 @@
 // Test data generation script
 // Run in browser console: copy and paste this entire script
 
-;(() => {
+import { userService } from "../lib/database/services/user-service"
+import { db } from "../lib/database/client"
+
+export async function createTestData() {
+  console.log("Starting test data generation...")
+
   const testUsers = [
     {
       name: "Sarah Chen",
       email: "sarah@test.com",
       password: "Test123",
-      age: "28",
+      age: 28,
       location: "London",
       interests: ["Photography", "Travel", "Coffee", "Art"],
       bio: "Adventure seeker and coffee enthusiast.",
@@ -16,7 +21,7 @@
       name: "James Wilson",
       email: "james@test.com",
       password: "Test123",
-      age: "32",
+      age: 32,
       location: "Manchester",
       interests: ["Gaming", "Cooking", "Music", "Technology"],
       bio: "Software engineer by day, gamer by night.",
@@ -25,7 +30,7 @@
       name: "Emma Rodriguez",
       email: "emma@test.com",
       password: "Test123",
-      age: "26",
+      age: 26,
       location: "Birmingham",
       interests: ["Yoga", "Reading", "Hiking", "Photography"],
       bio: "Yoga instructor and bookworm.",
@@ -56,41 +61,49 @@
     },
   ]
 
-  const existingUsers = JSON.parse(localStorage.getItem("allUsers") || "[]")
+  // Create users
+  for (const userData of testUsers) {
+    const result = await userService.register({
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+      age: userData.age,
+      location: userData.location,
+    })
 
-  testUsers.forEach((user) => {
-    const exists = existingUsers.find((u) => u.email === user.email)
-    if (!exists) {
-      const newUser = {
-        ...user,
-        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-        createdAt: new Date().toISOString(),
-      }
-      existingUsers.push(newUser)
-      console.log("[v0] Created user: " + user.name)
+    if (result.success && result.user) {
+      console.log(`Created user: ${userData.name}`)
+
+      await userService.setUserInterests(result.user.user_id, userData.interests)
+
+      // Update bio
+      await db.updateUser(result.user.user_id, { bio: userData.bio })
+    } else {
+      console.log(`User ${userData.name} already exists or failed to create`)
     }
-  })
+  }
 
-  localStorage.setItem("allUsers", JSON.stringify(existingUsers))
+  const existingGroups = await db.getGroups()
 
-  const existingGroups = JSON.parse(localStorage.getItem("allGroups") || "[]")
-
-  testGroups.forEach((group) => {
-    const exists = existingGroups.find((g) => g.name === group.name)
+  // Create groups
+  for (const groupData of testGroups) {
+    const exists = existingGroups.find((g) => g.name === groupData.name)
     if (!exists) {
       const newGroup = {
-        ...group,
+        ...groupData,
         id: "grp_" + Date.now().toString() + Math.random().toString(36).substr(2, 9),
         createdAt: new Date().toISOString(),
-        creatorId: existingUsers[0]?.id || "system",
+        creatorId: existingGroups.length > 0 ? existingGroups[0].creatorId : "system",
       }
-      existingGroups.push(newGroup)
-      console.log("[v0] Created group: " + group.name)
+      await db.createGroup(newGroup)
+      console.log(`Created group: ${groupData.name}`)
     }
-  })
+  }
 
-  localStorage.setItem("allGroups", JSON.stringify(existingGroups))
-  console.log(
-    "[v0] Done! Created " + testUsers.length + " users and " + testGroups.length + " groups. Refresh page to see them.",
-  )
-})()
+  console.log("✅ Test data created successfully!")
+}
+
+// Run if executed directly
+if (typeof window !== "undefined") {
+  createTestData()
+}
