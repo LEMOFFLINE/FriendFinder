@@ -1,3 +1,0 @@
-{
-  "/api/users/[userId]/friend-request/route": "app/api/users/[userId]/friend-request/route.js"
-}

@@ -2,7 +2,7 @@
 
 **Live Demo:** [http://121.196.228.85](http://121.196.228.85)
 
-A full-stack social networking platform built with Next.js 16 and PostgreSQL. This is a group project led and primarily developed by **LEMOFFLINE**.
+A full-stack social networking platform built with Next.js 16 and PostgreSQL. This project was independently designed and developed by **LEMOFFLINE**.
 
 ## About
 
@@ -189,7 +189,6 @@ npm install
 
 This project is for educational purposes as part of a university course assignment.
 
-## Contributors
+## Author
 
-- **LEMOFFLINE** - Team Leader & Primary Developer
-- Group project with collaborative contributions
+- **LEMOFFLINE** - Independent designer and developer
