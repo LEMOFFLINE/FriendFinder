@@ -1,6 +1,6 @@
 # FriendFinder
 
-A full-stack social networking platform built with Next.js 16 and PostgreSQL. This project was independently designed and developed by **LEMOFFLINE**.
+A full-stack social networking platform independently designed and developed by **LEMOFFLINE**.
 
 ## About
 
@@ -187,6 +187,6 @@ npm install
 
 This project is for educational purposes as part of a university course assignment.
 
-## Author
+## Developer
 
-- **LEMOFFLINE** - Independent designer and developer
+- **LEMOFFLINE** - Independent Developer
