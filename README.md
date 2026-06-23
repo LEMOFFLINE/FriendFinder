@@ -1,7 +1,5 @@
 # FriendFinder
 
-**Live Demo:** [http://121.196.228.85](http://121.196.228.85)
-
 A full-stack social networking platform built with Next.js 16 and PostgreSQL. This project was independently designed and developed by **LEMOFFLINE**.
 
 ## About
